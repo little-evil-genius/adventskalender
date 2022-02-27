@@ -190,100 +190,101 @@ function adventcalendar_install(){
 		'tid' => 1,
 		'attachedto' => '',
 		"stylesheet" =>	'#adventskalender {
-            width: 100%;
-            background-image: url(images/adventskalender/background.jpg);
-            background-repeat: repeat;
-            background-position: center center;
-            box-sizing: border-box;
-            display: inline-block;
-            background-size: 100% auto;
-        }
+	width: 100%;
+	background-image: url(../../../images/adventskalender/background.jpg);
+	background-repeat: repeat;
+	background-position: center center;
+	box-sizing: border-box;
+	display: inline-block;
+	background-size: 100% auto;
+}
+
+#adventskalender .kalenderbox {
+	padding: 31px;
+	height: auto;
+	width: 100%;
+	box-sizing: border-box;
+	display: inline-block;
+}
         
-        #adventskalender .kalenderbox {
-            padding: 31px;
-            height: auto;
-            width: 100%;
-            box-sizing: border-box;
-            display: inline-block;
-        }
-                
-        #adventskalender .kalenderbox .tuerchen {
-            float: left;
-            box-sizing: border-box;
-            background: transparent;
-            width: 16.6%;
-        }
-                
-        #adventskalender .kalenderbox .tuerchen .zahl {
-            border: 2px dashed #d7b587;
-            border-left: 2px solid #7d8873;
-            background-color: #285d61;
-            position: relative;
-            z-index: 2;
-            display: block;
-            background-repeat: no-repeat;
-            text-align: center;
-            margin: 5%;
-            height: 50%;
-            line-height: 130px;
-            font-size: 27px;
-            opacity: 01;
-            color: #d7b587;
-        }
-                
-        #adventskalender .kalenderbox .tuerchen .zahl a:link,
-        #adventskalender .kalenderbox .tuerchen .zahl a:visited,
-        #adventskalender .kalenderbox .tuerchen .zahl a:hover,
-        #adventskalender .kalenderbox .tuerchen .zahl a:active{
-            color: #d7b587;
-        }
-                
-        #adventskalender .kalenderbox .open {
-            transform: rotateY(330deg);
-            right: 1%;
-            position: relative;
-        }
-                
-        #adventskalender .kalenderbox .open:before {
-            content: "";
-            position: absolute;
-            top: 9%;
-            right: -10%;
-            bottom: 9%;
-            left: 5%;
-            background-color: rgb(255 255 255 / 45%);
-            z-index: 1;
-        }
-                
-        #adventskalender .kalenderbox .closed:hover {
-            animation: shake .5s ease-in-out;    
-        }
-                
-        @keyframes shake {
-            0% {
-                transform: translateX(0);
-            }
-            
-            20% {
-                transform: translateX(-10px);
-            }
-            
-            40% {
-                transform: translateX(10px);
-            }
-            
-            60% {
-                transform: translateX(-10px);
-            }
-            
-            80% {
-                transform: translateX(10px);
-            }
-            
-            100% {
-                transform: translateX(0);
-            }
-        }',
+#adventskalender .kalenderbox .tuerchen {
+	float: left;
+	box-sizing: border-box;
+	background: transparent;
+	width: 16.6%;
+}
+        
+#adventskalender .kalenderbox .tuerchen .zahl {
+	border: 2px dashed #d7b587;
+	border-left: 2px solid #7d8873;
+	background-color: #285d61;
+	position: relative;
+	z-index: 2;
+	display: block;
+	background-repeat: no-repeat;
+	text-align: center;
+	margin: 5%;
+	height: 50%;
+	line-height: 130px;
+	font-size: 27px;
+	opacity: 01;
+	color: #d7b587;
+}
+        
+#adventskalender .kalenderbox .tuerchen .zahl a:link,
+#adventskalender .kalenderbox .tuerchen .zahl a:visited,
+#adventskalender .kalenderbox .tuerchen .zahl a:hover,
+#adventskalender .kalenderbox .tuerchen .zahl a:active{
+	color: #d7b587;
+}
+        
+#adventskalender .kalenderbox .open {
+	transform: rotateY(330deg);
+	right: 1%;
+	position: relative;
+	transform: perspective(800px) rotateY(-30deg) translate(-7px,0px);
+}
+        
+#adventskalender .kalenderbox .open:before {
+	content: "";
+	position: absolute;
+	top: 9%;
+	right: -7%;
+	bottom: 8%;
+	left: 5%;
+	background-color: rgb(255 255 255 / 45%);
+	z-index: 1;
+}
+        
+#adventskalender .kalenderbox .closed:hover {
+	animation: shake .5s ease-in-out;    
+}
+        
+@keyframes shake {
+	0% {
+		transform: translateX(0);
+	}
+	
+	20% {
+		transform: translateX(-10px);
+	}
+	
+	40% {
+		transform: translateX(10px);
+	}
+	
+	60% {
+		transform: translateX(-10px);
+	}
+	
+	80% {
+		transform: translateX(10px);
+	}
+	
+	100% {
+		transform: translateX(0);
+	}
+}',
 		'cachefile' => $db->escape_string(str_replace('/', '', 'adventcalendar.css')),
 		'lastmodified' => time()
 	);
