@@ -4,6 +4,8 @@ require_once './global.php';
 
 global $db, $cache, $mybb, $lang, $templates, $theme, $header, $headerinclude, $footer, $adventcalender, $calendar_day;
 
+$lang->load('adventcalendar');
+
 // Plugin ist nicht installiert - Zurück auf dem Index
 if (!$db->table_exists("adventcalendar")) {
     redirect('index.php', $lang->adventcalendar_redirect_uninstall);
