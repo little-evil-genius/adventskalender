@@ -128,7 +128,7 @@ function adventcalendar_install(){
     $db->insert_query("templates", $insert_array);
 
     $insert_array = array(
-        'title' => 'adventcalendar_day',
+        'title' => 'adventcalendar_calender_day',
         'template' => $db->escape_string('<div class="tuerchen {$option}">
         <div class="zahl">
            {$link}
