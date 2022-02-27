@@ -239,7 +239,6 @@ function adventcalendar_install(){
 }
         
 #adventskalender .kalenderbox .open {
-	transform: rotateY(330deg);
 	right: 1%;
 	position: relative;
 	transform: perspective(800px) rotateY(-30deg) translate(-7px,0px);
