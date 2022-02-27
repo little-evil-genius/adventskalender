@@ -43,7 +43,7 @@ if(!$mybb->input['tuer']) {
 
     // EINZELNEN TAGE DURCHGEHEN
     foreach ($days as $day) {
-        if ($datum >= $day) {
+        if (13 >= $day) {
             $option = "open";
             $link = "<a href=\"adventskalender.php?tuer={$day}\">{$day}</a>";
         } else {
@@ -60,11 +60,11 @@ if(!$mybb->input['tuer']) {
 
     // Kalender ist aktiv
     if($adventcalendar_activate_setting == 1) { 
-        eval("\$adventcalender .= \"" . $templates->get ("adventcalendar_calendar") . "\";");
+        eval("\$adventcalender .= \"" . $templates->get ("adventcalendar_calender") . "\";");
     } else {
         // Teamgruppen können den Kalender immer sehen
         if (is_member($adventcalendar_teamgroups)) {
-            eval("\$adventcalender .= \"" . $templates->get ("adventcalendar_calendar") . "\";");
+            eval("\$adventcalender .= \"" . $templates->get ("adventcalendar_calender") . "\";");
         } else {
             $adventcalender = $lang->adventcalendar_deactivate;
         }
