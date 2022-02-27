@@ -43,7 +43,7 @@ if(!$mybb->input['tuer']) {
 
     // EINZELNEN TAGE DURCHGEHEN
     foreach ($days as $day) {
-        if (13 >= $day) {
+        if ($datum >= $day) {
             $option = "open";
             $link = "<a href=\"adventskalender.php?tuer={$day}\">{$day}</a>";
         } else {
