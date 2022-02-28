@@ -31,7 +31,7 @@ Link: BOARDLINK/admin/index.php?module=user-admin_permissions
  ACP Hinzufügen<p>
  <img src="https://www.bilder-hochladen.net/files/big/m4bn-c7-d002.png" />
  
- Teamanzeige - mit Abwesenheitsnotiz & ohne Rückkehrdatum<p>
+Default Adventskalenderanzeige - offene und geschlossene Türchen<p>
  <img src="https://www.bilder-hochladen.net/files/big/m4bn-c8-46ae.png" />
 
 # Credits
