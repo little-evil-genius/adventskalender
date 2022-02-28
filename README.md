@@ -46,5 +46,5 @@ Default Adventskalenderanzeige - offene und geschlossene Türchen<p>
  <img src="https://www.bilder-hochladen.net/files/big/m4bn-c8-46ae.png" />
 
 # Credits
-Das Hintergrund:
+Das Hintergrundbild:
 <a href='https://www.freepik.com/vectors/christmas-sketch'>Christmas sketch vector created by createvil - www.freepik.com</a>
