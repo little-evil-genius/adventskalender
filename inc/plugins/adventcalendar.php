@@ -114,7 +114,7 @@ function adventcalendar_install(){
          </tr>
          <tr>
             <td>
-                {$adventcalender}
+                {$adventcalendar}
             </td>
          </tr>
         </table>
@@ -128,7 +128,7 @@ function adventcalendar_install(){
     $db->insert_query("templates", $insert_array);
 
     $insert_array = array(
-        'title' => 'adventcalendar_calender_day',
+        'title' => 'adventcalendar_calendar_day',
         'template' => $db->escape_string('<div class="tuerchen {$option}">
         <div class="zahl">
            {$link}
@@ -745,11 +745,11 @@ global $parameters, $user;
     
     switch ($filename) {
         case 'adventskalender':
-        if(!isset($parameters['action']))
+        if(!isset($parameters['tuer']) && empty($parameters['site']))
         {
             $user_activity['activity'] = "haupt";
         }
-        if($parameters['action'] == "tuer") {
+        if($parameters['tuer'] && empty($parameters['site'])) {
             $user_activity['activity'] = "tuer";
         }
         break;
