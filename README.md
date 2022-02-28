@@ -8,6 +8,9 @@ Der Adventskalender ist komplett mit Divs gecodet worden und kann somit angepass
 - adventcalendar_door
 - adventcalendar_mainpage
 
+# Neuer Stylesheet 
+- adventcalendar.css
+
 # ACP-Einstellungen - Adventskalender
 - Plugin aktivieren
 - Erlaubte Gruppen
