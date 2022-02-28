@@ -20,8 +20,8 @@ Der Adventskalender ist komplett mit Divs gecodet worden und kann somit angepass
 
 # Links
 - ACP: BOARDLINK/admin/index.php?module=config-adventcalendar
-- Kalender: BOARDLINK/adventcalendar.php
-- Türchen: BOARDLINK/adventcalendar.php?tuer=xx
+- Kalender: BOARDLINK/adventskalender.php
+- Türchen: BOARDLINK/adventskalender.php?tuer=xx
 
 # Administrator-Berechtigungen
 Damit alle Adminaccounts die Verwaltung sehen können, muss im  Admin CP die Berechtigungen noch eingestellt werden. Dafür einmal Benutzer & Gruppen » Administrator-Berechtigungen » Benutzer-Berechtigungen » Standard-Berechtigungen » Tab "Konfiguration", ganz unten
