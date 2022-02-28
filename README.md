@@ -4,7 +4,7 @@ Der Adventskalender ist komplett mit Divs gecodet worden und kann somit angepass
 
 # Neue Templates
 - adventcalendar_calendar
-- adventcalendar_calender_day
+- adventcalendar_calendar_day
 - adventcalendar_door
 - adventcalendar_mainpage
 
@@ -26,6 +26,13 @@ Der Adventskalender ist komplett mit Divs gecodet worden und kann somit angepass
 # Administrator-Berechtigungen
 Damit alle Adminaccounts die Verwaltung sehen können, muss im  Admin CP die Berechtigungen noch eingestellt werden. Dafür einmal Benutzer & Gruppen » Administrator-Berechtigungen » Benutzer-Berechtigungen » Standard-Berechtigungen » Tab "Konfiguration", ganz unten
 Link: BOARDLINK/admin/index.php?module=user-admin_permissions
+
+# Design
+Wie oben schon geschrieben, wurde der komplette Adventskalender ansich per Divs gecodet und kann somit von euch angepasst werden, falls jemand die Default Ansicht nicht möchte. 
+Wichtig dabei sind die zwei Tpls <b>adventcalendar_calendar</b> und <b>adventcalendar_calendar_day</b>.<br>
+Im tpl adventcalendar_calendar befindet sich der Körper von dem Adventskalender quasi. Und damit man nicht 24 einzelne Boxen für die Tage in diesem Tpl hat (und es dadurch unübersichtlich wird) gibt es die Variable <b>{$calendar_day}</b>. Diese ruft das Tpl adventcalendar_calendar_day auf, wo die einzelnen Tagesboxen definiert werden.<br>
+In dem zweiten Tpl befinden sich zwei Variabalen. Aber nur eine ist wirklich wichtig. Mit <b>{$link}</b> bildet sich der Link/die Zahlen in den Fensterchen. Er ist eine Variable, damit wenn der Tag noch gar zu öffnen ist nur die Zahl dort steht und noch kein Link angezeigt wird. Die zweite Variable {$option} ist im Grunde nur eine Spielerei, damit im css dieses offene und geschlossene definiert und zugeordnet werden kann. Also falls ihr daran kein Interesse habt, dann könnt ihr diese Variable auch entfernen. 
+
 
 # Demo 
  ACP Verwaltung<p>
