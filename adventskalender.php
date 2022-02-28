@@ -2,7 +2,7 @@
 define('IN_MYBB', 1);
 require_once './global.php';
 
-global $db, $cache, $mybb, $lang, $templates, $theme, $header, $headerinclude, $footer, $adventcalender, $calendar_day;
+global $db, $cache, $mybb, $lang, $templates, $theme, $header, $headerinclude, $footer, $adventcalendar, $calendar_day;
 
 $lang->load('adventcalendar');
 
@@ -55,18 +55,18 @@ if(!$mybb->input['tuer']) {
                 $link = "{$day}";
             }
         }
-        eval("\$calendar_day .= \"" . $templates->get ("adventcalendar_calender_day") . "\";");
+        eval("\$calendar_day .= \"" . $templates->get ("adventcalendar_calendar_day") . "\";");
     }
 
     // Kalender ist aktiv
     if($adventcalendar_activate_setting == 1) { 
-        eval("\$adventcalender .= \"" . $templates->get ("adventcalendar_calender") . "\";");
+        eval("\$adventcalendar .= \"" . $templates->get ("adventcalendar_calendar") . "\";");
     } else {
         // Teamgruppen können den Kalender immer sehen
         if (is_member($adventcalendar_teamgroups)) {
-            eval("\$adventcalender .= \"" . $templates->get ("adventcalendar_calender") . "\";");
+            eval("\$adventcalendar .= \"" . $templates->get ("adventcalendar_calendar") . "\";");
         } else {
-            $adventcalender = $lang->adventcalendar_deactivate;
+            $adventcalendar = $lang->adventcalendar_deactivate;
         }
     }
 
@@ -163,7 +163,7 @@ foreach ($days as $day) {
             } 
             // Alle anderen sehen die Meldung - Kalender deaktiviert
             else {
-                $adventcalender = $lang->adventcalendar_deactivate;
+                $adventcalendar = $lang->adventcalendar_deactivate;
                 eval("\$page = \"".$templates->get("adventcalendar_mainpage")."\";");
             }
         }
