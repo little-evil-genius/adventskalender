@@ -745,7 +745,7 @@ global $parameters, $user;
     
     switch ($filename) {
         case 'adventskalender':
-        if(!isset($parameters['tuer']) && empty($parameters['site']))
+        if(!isset($parameters['tuer']))
         {
             $user_activity['activity'] = "haupt";
         }
@@ -758,7 +758,7 @@ global $parameters, $user;
 return $user_activity;
 }
 
-function adventcalendare_online_location($plugin_array) {
+function adventcalendar_online_location($plugin_array) {
 global $mybb, $theme, $lang;
 
 	if($plugin_array['user_activity']['adventskalender'] == "haupt") {
