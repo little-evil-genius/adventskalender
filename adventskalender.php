@@ -23,15 +23,15 @@ date_default_timezone_set("Europe/Berlin");
 $timestamp = time();
 $datum = date("j",$timestamp);
 
-if ($adventcalendar_shuffle_setting == 0) {
-    $days = explode (", ", $adventcalendar_formation_setting);
-} else {
-    $days = range(1, 24);
-    shuffle($days);
-}
-
 // DIE HAUPTSEITE VOM DER DATENBANK
 if(!$mybb->input['tuer']) {
+    
+    if ($adventcalendar_shuffle_setting == 0) {
+        $days = explode (", ", $adventcalendar_formation_setting);
+    } else {
+        $days = range(1, 24);
+        shuffle($days);
+    }
 
     // NAVIGATION
     add_breadcrumb("Adventskalender", "adventskalender.php");
