@@ -2,7 +2,7 @@
 define('IN_MYBB', 1);
 require_once './global.php';
 
-global $db, $cache, $mybb, $lang, $templates, $theme, $header, $headerinclude, $footer, $adventcalendar, $calendar_day;
+global $db, $cache, $mybb, $lang, $templates, $theme, $header, $headerinclude, $footer, $adventcalendar, $calendar_day, $adventcalendar_archiv;
 
 $lang->load('adventcalendar');
 
@@ -22,16 +22,17 @@ $adventcalendar_teamgroups = $mybb->settings['adventcalendar_teamgroup'];
 date_default_timezone_set("Europe/Berlin");
 $timestamp = time();
 $datum = date("j",$timestamp);
+$heute_year = date("Y",$timestamp);
+
+if ($adventcalendar_shuffle_setting == 0) {
+    $days = explode (", ", $adventcalendar_formation_setting);
+} else {
+    $days = range(1, 24);
+    shuffle($days);
+}
 
 // DIE HAUPTSEITE VOM DER DATENBANK
-if(!$mybb->input['tuer']) {
-    
-    if ($adventcalendar_shuffle_setting == 0) {
-        $days = explode (", ", $adventcalendar_formation_setting);
-    } else {
-        $days = range(1, 24);
-        shuffle($days);
-    }
+if(!$mybb->get_input('tuer') AND !$mybb->get_input('year')) {
 
     // NAVIGATION
     add_breadcrumb("Adventskalender", "adventskalender.php");
@@ -78,7 +79,7 @@ if(!$mybb->input['tuer']) {
 $days = explode (", ", "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24");
 foreach ($days as $day) {
 
-    if($mybb->input['tuer'] == "$day") {
+    if($mybb->get_input('tuer') == "$day") {
 
         if(!is_member($adventcalendar_allow_groups)) { 
             error_no_permission();
@@ -102,7 +103,7 @@ foreach ($days as $day) {
 
         $claim_day ="";
         // Kontrolliere, ob jeder Tag schon erstellt wurde
-        $days_query = $db->query("SELECT day FROM ".TABLE_PREFIX."adventcalendar");
+        $days_query = $db->query("SELECT day FROM ".TABLE_PREFIX."adventcalendar WHERE year = '$heute_year'");
         while ($days = $db->fetch_array($days_query)){
             $claim = "";
             $claim = $days["day"];
@@ -114,6 +115,7 @@ foreach ($days as $day) {
 
             $door_query = $db->query("SELECT * FROM ".TABLE_PREFIX."adventcalendar ac
             WHERE day = '$day'
+            AND year = '$heute_year'
             ");
 
             while ($door = $db->fetch_array ($door_query)) {
@@ -172,4 +174,91 @@ foreach ($days as $day) {
         die();
     }
 
+}
+
+$claim_year ="";
+// Die Jahrszahlen rausfinden
+$years_query = $db->query("SELECT year FROM ".TABLE_PREFIX."adventcalendar
+WHERE year != '$heute_year'
+GROUP BY year
+");
+
+while ($years = $db->fetch_array($years_query)){
+    $year_claim = "";
+    $year_claim = $years["year"];
+    $claim_year .= $year_claim.", ";
+}
+
+$years = explode (", ", $claim_year);
+
+foreach ($years as $year) {
+
+    if($mybb->input['year'] == "$year") {
+
+        if(!is_member($adventcalendar_allow_groups)) { 
+            error_no_permission();
+            return;
+        }
+
+        // Format Entries
+        require_once MYBB_ROOT."inc/class_parser.php";
+        $parser = new postParser;
+        $parser_options = array(
+            "allow_html" => 1,
+            "allow_mycode" => 1,
+            "allow_smilies" => 1,
+            "allow_imgcode" => 1
+        );
+
+        // NAVIGATION
+        add_breadcrumb($lang->adventcalendar_name, "adventskalender.php");
+        $nav_year = $lang->sprintf($lang->adventcalendar_year_nav, $year);
+        add_breadcrumb($nav_year, "adventskalender.php?year=".$year);
+
+        $claim_day ="";
+        // Kontrolliere, ob jeder Tag schon erstellt wurde
+        $days_query = $db->query("SELECT day FROM ".TABLE_PREFIX."adventcalendar WHERE year = '$year'");
+        while ($days = $db->fetch_array($days_query)){
+            $claim = "";
+            $claim = $days["day"];
+            $claim_day .= $claim;
+        }
+
+        $year_days_string = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24";
+        $days = explode (", ", $year_days_string);
+
+        foreach ($days as $day) {
+
+            // Wenn der Tag schon vorhanden ist, dann wird der Inhalt ausgegeben
+            if (strpos($claim_day, $day) !== FALSE) {
+
+                $door_query = $db->query("SELECT * FROM ".TABLE_PREFIX."adventcalendar ac
+                WHERE day = '$day'
+                AND year = '$year'     
+                ");
+
+                while ($door = $db->fetch_array ($door_query)) {
+                    // LEER LAUFEN LASSEN
+                    $aid = "";
+                    $day = "";            
+                    $text = "";
+
+                    // MIT INHALT FÜLLEN
+                    $aid = $door['aid'];
+                    $day = $door['day'];
+                    $text = $parser->parse_message($door['text'], $parser_options);
+                }
+            } else {
+                $text = $lang->adventcalendar_year_nottext;
+            } 
+            
+            eval("\$adventcalendar_archiv .= \"" . $templates->get ("adventcalendar_year") . "\";");
+        }
+
+
+
+        eval("\$page = \"".$templates->get("adventcalendar_yearpage")."\";");
+        output_page($page);
+        die();
+    }
 }
