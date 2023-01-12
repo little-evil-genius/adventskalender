@@ -28,6 +28,7 @@ function adventcalendar_install(){
     $db->query("CREATE TABLE ".TABLE_PREFIX."adventcalendar(
         `aid` int(10) NOT NULL AUTO_INCREMENT,
         `day` int(10) NOT NULL,
+        `year` int(10) NOT NULL,
         `title` VARCHAR(1000),
         `text` VARCHAR(500000),
         PRIMARY KEY(`aid`),
@@ -180,6 +181,77 @@ function adventcalendar_install(){
         'dateline' => TIME_NOW    
     );    
     $db->insert_query("templates", $insert_array);
+
+    $insert_array = array(
+        'title' => 'adventcalendar_year',
+        'template' => $db->escape_string('<div class="thead" id="Tuer{$day}">Tag {$day}</div>
+        <div style="text-align: justify; width: 90%; margin: 20px auto ;">
+            {$text}
+        </div>'),
+        'sid' => '-1',
+        'version' => '',
+        'dateline' => TIME_NOW    
+    );    
+    $db->insert_query("templates", $insert_array);
+
+    $insert_array = array(
+        'title' => 'adventcalendar_yearpage',
+        'template' => $db->escape_string('<html>    
+        <head>
+        <title>{$settings[\'bbname\']} - {$lang->adventcalendar_yearpage} {$year}</title>
+        {$headerinclude}
+        </head>
+        <body>
+        {$header}
+        <table width="100%"  border="0" cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" class="tborder">
+         <tr> 
+            <td class="thead">{$lang->adventcalendar_yearpage} {$year}</td>
+         </tr>
+			<tr>
+				<td>
+					<div class="float_right">
+		<a href="adventskalender.php?year={$year}#Tuer1" style="padding: 5px;">01</a>
+		<a href="adventskalender.php?year={$year}#Tuer2" style="padding: 5px;">02</a>
+		<a href="adventskalender.php?year={$year}#Tuer3" style="padding: 5px;">03</a>
+		<a href="adventskalender.php?year={$year}#Tuer4" style="padding: 5px;">04</a>
+		<a href="adventskalender.php?year={$year}#Tuer5" style="padding: 5px;">05</a>
+		<a href="adventskalender.php?year={$year}#Tuer6" style="padding: 5px;">06</a>
+		<a href="adventskalender.php?year={$year}#Tuer7" style="padding: 5px;">07</a>
+		<a href="adventskalender.php?year={$year}#Tuer8" style="padding: 5px;">08</a>
+		<a href="adventskalender.php?year={$year}#Tuer9" style="padding: 5px;">09</a>
+		<a href="adventskalender.php?year={$year}#Tuer10" style="padding: 5px;">10</a>
+		<a href="adventskalender.php?year={$year}#Tuer11" style="padding: 5px;">11</a>
+		<a href="adventskalender.php?year={$year}#Tuer12" style="padding: 5px;">12</a>
+		<a href="adventskalender.php?year={$year}#Tuer13" style="padding: 5px;">13</a>
+		<a href="adventskalender.php?year={$year}#Tuer14" style="padding: 5px;">14</a>
+		<a href="adventskalender.php?year={$year}#Tuer15" style="padding: 5px;">15</a>
+		<a href="adventskalender.php?year={$year}#Tuer16" style="padding: 5px;">16</a>
+		<a href="adventskalender.php?year={$year}#Tuer17" style="padding: 5px;">17</a>
+		<a href="adventskalender.php?year={$year}#Tuer18" style="padding: 5px;">18</a>
+		<a href="adventskalender.php?year={$year}#Tuer19" style="padding: 5px;">19</a>
+		<a href="adventskalender.php?year={$year}#Tuer20" style="padding: 5px;">20</a>
+		<a href="adventskalender.php?year={$year}#Tuer21" style="padding: 5px;">21</a>
+		<a href="adventskalender.php?year={$year}#Tuer22" style="padding: 5px;">22</a>
+		<a href="adventskalender.php?year={$year}#Tuer23" style="padding: 5px;">23</a>
+		<a href="adventskalender.php?year={$year}#Tuer24" style="padding: 5px;">24</a>
+	</div>
+				</td>
+			</tr>
+         <tr>
+            <td>
+                {$adventcalendar_archiv}
+            </td>
+         </tr>
+        </table>
+        {$footer}
+        </body>
+        </html>'),
+        'sid' => '-1',
+        'version' => '',
+        'dateline' => TIME_NOW    
+    );    
+    $db->insert_query("templates", $insert_array);
+
 
     // CSS HINZUFÜGEN
     require_once MYBB_ADMIN_DIR."inc/functions_themes.php";
@@ -438,11 +510,11 @@ function adventcalendar_manage_adventcalendar() {
             
             // Alle Einträge - nach Tag sortieren
             $query = $db->simple_select("adventcalendar", "*", "",
-                ["order_by" => 'day', 'order_dir' => 'ASC']);
+                ["order_by" => 'year', 'order_dir' => 'DESC']);
  
             while($adventcalendar_entries = $db->fetch_array($query)) {
 
-                $form_container->output_cell('<center><strong>'.htmlspecialchars_uni($adventcalendar_entries['day']).'</strong></center>');
+                $form_container->output_cell('<center><strong>'.htmlspecialchars_uni($adventcalendar_entries['day']).'.12.'.$adventcalendar_entries['year'].'</strong></center>');
                 $form_container->output_cell(htmlspecialchars_uni($adventcalendar_entries['title']));
                 $popup = new PopupMenu("adventcalendar_{$adventcalendar_entries['aid']}", $lang->adventcalendar_manage_options);
                 $popup->add_item(
@@ -468,7 +540,10 @@ function adventcalendar_manage_adventcalendar() {
             if ($mybb->request_method == "post") {
                 // Check if required fields are not empty
                 if (empty($mybb->input['day'])) {
-                    $errors[] = $lang->adventcalendar_manage_error_no_title;
+                    $errors[] = $lang->adventcalendar_manage_error_no_day;
+                }
+                if (empty($mybb->input['year'])) {
+                    $errors[] = $lang->adventcalendar_manage_error_no_year;
                 }
                 if (empty($mybb->input['text'])) {
                     $errors[] = $lang->adventcalendar_manage_error_no_text;
@@ -482,6 +557,7 @@ function adventcalendar_manage_adventcalendar() {
 
                     $new_entry = array(
                         "day" => $db->escape_string($mybb->input['day']),
+                        "year" => $db->escape_string($mybb->input['year']),
                         "title" => $db->escape_string($mybb->input['title']),
                         "text" => $db->escape_string($mybb->input['text'])
                     );
@@ -534,16 +610,22 @@ EOF;
                 $form_container->output_row(
                     $lang->adventcalendar_manage_entry_day_title."<em>*</em>",
                     $lang->adventcalendar_manage_entry_day_desc,
-                    $form->generate_text_box('day', $mybb->input['day'])
+                    $form->generate_text_box('day', $mybb->get_input('day'))
+                );
+
+                $form_container->output_row(
+                    $lang->adventcalendar_manage_entry_year_title."<em>*</em>",
+                    $lang->adventcalendar_manage_entry_year_desc,
+                    $form->generate_text_box('year', $mybb->get_input('year'))
                 );
 
                 $form_container->output_row(
                     $lang->adventcalendar_manage_entry_title_title."<em>*</em>",
                     $lang->adventcalendar_manage_entry_title_desc,
-                    $form->generate_text_box('title', $mybb->input['title'])
+                    $form->generate_text_box('title', $mybb->get_input('title'))
                 );
 
-                $text_editor = $form->generate_text_area('text', $mybb->input['text'], array(
+                $text_editor = $form->generate_text_area('text', $mybb->get_input('text'), array(
                     'id' => 'text',
                     'rows' => '25',
                     'cols' => '70',
@@ -571,7 +653,10 @@ EOF;
             if ($mybb->request_method == "post") {
                 // Check if required fields are not empty
                 if (empty($mybb->input['day'])) {
-                    $errors[] = $lang->adventcalendar_manage_error_no_title;
+                    $errors[] = $lang->adventcalendar_manage_error_no_day;
+                }
+                if (empty($mybb->input['year'])) {
+                    $errors[] = $lang->adventcalendar_manage_error_no_year;
                 }
                 if (empty($mybb->input['text'])) {
                     $errors[] = $lang->adventcalendar_manage_error_no_text;
@@ -586,6 +671,7 @@ EOF;
 
                     $edited_entry = [
                         "day" => $db->escape_string($mybb->input['day']),
+                        "year" => $db->escape_string($mybb->input['year']),
                         "text" => $db->escape_string($mybb->input['text']),
                         "title" => $db->escape_string($mybb->input['title'])
                     ];
@@ -652,6 +738,12 @@ EOF;
                 $lang->adventcalendar_manage_entry_day_title,
                 $lang->adventcalendar_manage_entry_day_desc,
                 $form->generate_text_box('day', htmlspecialchars_uni($edit_entry['day']))
+            );
+
+            $form_container->output_row(
+                $lang->adventcalendar_manage_entry_year_title,
+                $lang->adventcalendar_manage_entry_year_desc,
+                $form->generate_text_box('year', htmlspecialchars_uni($edit_entry['year']))
             );
 
             $form_container->output_row(
