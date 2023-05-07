@@ -37,13 +37,13 @@ Falls ihr die Türchen zB jeden Tag eine andere Farbe oder andere Eigenschaften 
 
 # Demo 
  ACP Verwaltung<p>
- <img src="https://www.bilder-hochladen.net/files/big/m4bn-c6-a221.png" />
+ <img src="https://stormborn.at/plugins/adventskalender_acp_uebersicht.png" />
  
  ACP Hinzufügen<p>
- <img src="https://www.bilder-hochladen.net/files/big/m4bn-c7-d002.png" />
+ <img src="https://stormborn.at/plugins/adventskalender_acp_add.png" />
  
 Default Adventskalenderanzeige - offene und geschlossene Türchen<p>
- <img src="https://www.bilder-hochladen.net/files/big/m4bn-c8-46ae.png" />
+ <img src="https://stormborn.at/plugins/adventskalender.png" />
 
 # Credits
 Das Hintergrundbild:
