@@ -15,7 +15,7 @@ function adventcalendar_info(){
 		"website"	=> "https://github.com/little-evil-genius/adventskalender",
 		"author"	=> "little.evil.genius",
 		"authorsite"	=> "https://storming-gates.de/member.php?action=profile&uid=1712",
-		"version"	=> "1.1",
+		"version"	=> "1.1.1",
 		"compatibility" => "18*"
 	);
 }
@@ -417,7 +417,7 @@ function adventcalendar_settings_change(){
 
     $result = $db->simple_select('settinggroups', 'gid', "name='adventcalendar'", array("limit" => 1));
     $group = $db->fetch_array($result);
-    $adventcalendar_settings_peeker = ($mybb->input['gid'] == $group['gid']) && ($mybb->request_method != 'post');
+    $adventcalendar_settings_peeker = ($mybb->get_input('gid') == $group['gid']) && ($mybb->request_method != 'post');
 }
 function adventcalendar_settings_peek(&$peekers){
     global $mybb, $adventcalendar_settings_peeker;
